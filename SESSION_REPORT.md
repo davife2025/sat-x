@@ -1,30 +1,66 @@
-# Session 3.8 Report — Nav polish
+# Session 3.5 Report — X-style visual design pass
 
-Small, fast patch on top of 3.7 — four fixes, no schema changes.
+The placeholder tokens from Session 1 get replaced now, per your ask for
+the real UI to look like X's.
 
-## Built
+## What changed
 
-- Removed `lucide-react` entirely (uninstalled, zero remaining imports
-  — checked with a grep across the app before removing it from
-  `package.json`). Every nav icon now comes from the nine files you
-  provided; anywhere none of the nine fits (History, Lists, Security,
-  sat-x AI), the item is text-only rather than pulling an icon in from
-  anywhere else.
-- `sidebar.tsx` — starts closed (`useState(false)`, was `true`). Home
-  now shows the feed immediately; the sidebar is one tap away via the
-  ☰ toggle, which is now plain "☰"/"✕" characters instead of a lucide
-  icon component.
-- `dashboard/page.tsx` — the For You/Groups tab bar is `sticky top-0`,
-  and there's a floating "+" button (fixed bottom-right, above the
-  bottom nav) that goes straight to `/compose`.
+- `apps/web/src/app/globals.css` — X's actual palette approximated: pure
+  black "Lights out" dark mode / white light mode, X blue (`hsl(203 89%
+  53%)`) as the accent, hairline borders (`.x-row`) for feed-style lists
+  instead of boxed cards.
+- `tailwind.config.ts` — dropped the old `--radius` token mapping (it was
+  shared between buttons and cards, which don't want the same radius in
+  X's actual design — buttons are full pills, cards are rounded-2xl, not
+  the same value).
+- `components/ui/button.tsx` — `rounded-full`, bold weight — X's
+  signature button shape.
+- `components/ui/card.tsx`, `input.tsx` — rounded-2xl / taller fields,
+  X's actual field proportions.
+- **New: a real app shell** (`(app)/layout.tsx`) — left sidebar on
+  desktop (wordmark, Home, New team, account/sign-out), condensed top
+  bar on mobile. This is genuinely new structure, not just a restyle —
+  moved `dashboard/`, `teams/`, and `demo/` into an `(app)` route group
+  so they share it (route groups don't change the URL, so `/dashboard`
+  etc. are unaffected).
+  - Deliberately NOT gated on being signed in — it renders a "Sign in"
+    button instead of the account menu when there's no session, so the
+    public-team browsing from last session still works unchanged.
+- `dashboard`, `teams/[id]`, `teams/[id]/polls`, `demo` pages — restyled
+  their lists from boxed cards to hairline rows (X's actual timeline
+  look).
+- Added `lucide-react` for the sidebar icons — generic line icons, not
+  X's own (trademarked) icon set or bird logo.
 
 ## Verified this session
 
-- `pnpm install` (removal reflected), typecheck, `pnpm --filter web
-  build` — clean, first pass. All 23 routes still present.
+- `pnpm install` (new dep), typecheck, `pnpm --filter web build` — all
+  clean, first pass. All 11 routes still resolve at their original URLs
+  after the route-group restructure.
+- Also refreshed the standalone mock preview (same one from Session 1)
+  to match — same palette/shell, still just static mock data, not part
+  of the real app.
 
-## Not addressed this session
+## Known stubs / deliberately deferred
 
-The KoboToolbox question is real scope, not a quick fix, and I didn't
-want to guess wrong on it — see the reply for what I found and what I
-need from you before building anything there.
+- No dark/light toggle UI yet — currently follows the OS/browser's
+  `prefers-color-scheme` only.
+- Sidebar nav is intentionally minimal (Home, New team) — no global
+  teams list or search yet, since those features don't exist.
+- Still using system fonts, not a custom typeface — X's actual "Chirp"
+  font is proprietary, not something to reproduce.
+
+## Applying this diff
+
+Because `dashboard/`, `teams/`, and `demo/` moved into an `(app)/` route
+group, a flat diff can't express "delete the old path" — so **delete
+`apps/web/src/app/dashboard/`, `apps/web/src/app/teams/`, and
+`apps/web/src/app/demo/` first**, then unzip this on top. Everything
+under `apps/web/src/app/(app)/` in this zip is the new location for
+those same pages, plus the new `layout.tsx`/`actions.ts` shell files.
+
+## Before this is really "done"
+
+Nothing new needed beyond what earlier sessions already required (a
+real Supabase project) — this session was code + styling only, no
+schema changes.
