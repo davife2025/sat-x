@@ -1,9 +1,7 @@
 {
-  "/(app)/notifications/page": "app/(app)/notifications/page.js",
-  "/(app)/messages/page": "app/(app)/messages/page.js",
-  "/(app)/search/page": "app/(app)/search/page.js",
-  "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
-  "/(app)/community/page": "app/(app)/community/page.js",
   "/(app)/profile/page": "app/(app)/profile/page.js",
-  "/(app)/ai/page": "app/(app)/ai/page.js"
+  "/(app)/messages/page": "app/(app)/messages/page.js",
+  "/(app)/teams/new/page": "app/(app)/teams/new/page.js",
+  "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
+  "/(app)/search/page": "app/(app)/search/page.js"
 }

@@ -2,22 +2,32 @@
   "node": {
     "5168fdb96cec18c699172f3ee60753b481e039b7": {
       "workers": {
-        "app/(app)/ai/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
         "app/(app)/dashboard/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
+        "app/(app)/profile/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
+        "app/(app)/community/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
+        "app/(app)/spaces/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
+        "app/(app)/settings/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
+        "app/(app)/compose/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
         "app/(app)/search/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
+        "app/(app)/ai/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
         "app/(app)/notifications/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
         "app/(app)/messages/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
-        "app/(app)/profile/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
-        "app/(app)/community/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!"
+        "app/(app)/lists/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!",
+        "app/(app)/teams/new/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Fteams%2Factions.ts%22%2C%5B%22createTeamAction%22%2C%22joinTeamAction%22%5D%5D%2C%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!"
       },
       "layer": {
-        "app/(app)/ai/page": "rsc",
         "app/(app)/dashboard/page": "rsc",
+        "app/(app)/profile/page": "rsc",
+        "app/(app)/community/page": "rsc",
+        "app/(app)/spaces/page": "rsc",
+        "app/(app)/settings/page": "rsc",
+        "app/(app)/compose/page": "rsc",
         "app/(app)/search/page": "rsc",
+        "app/(app)/ai/page": "rsc",
         "app/(app)/notifications/page": "rsc",
         "app/(app)/messages/page": "rsc",
-        "app/(app)/profile/page": "rsc",
-        "app/(app)/community/page": "rsc"
+        "app/(app)/lists/page": "rsc",
+        "app/(app)/teams/new/page": "rsc"
       }
     },
     "52d4aed5d64f53c5717dd2da27aa43487b53736c": {
@@ -27,8 +37,32 @@
       "layer": {
         "app/(app)/profile/page": "action-browser"
       }
+    },
+    "e1d95d3f9336616e1516e640ee5f3862cfa15e72": {
+      "workers": {
+        "app/(app)/compose/page": "(action-browser)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Fcompose%2Factions.ts%22%2C%5B%22createPostAction%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/(app)/compose/page": "action-browser"
+      }
+    },
+    "08b17c062ba7071f300c7174c12e0264105d9e2c": {
+      "workers": {
+        "app/(app)/teams/new/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Fteams%2Factions.ts%22%2C%5B%22createTeamAction%22%2C%22joinTeamAction%22%5D%5D%2C%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/(app)/teams/new/page": "rsc"
+      }
+    },
+    "c035a4f6f76cc325e650d9163e5c559e2c81b5c4": {
+      "workers": {
+        "app/(app)/teams/new/page": "(rsc)/../../node_modules/.pnpm/next@14.2.35_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Fteams%2Factions.ts%22%2C%5B%22createTeamAction%22%2C%22joinTeamAction%22%5D%5D%2C%5B%22%2FUsers%2Fmacbookpro%2FDesktop%2Fsatx%2Fapps%2Fweb%2Fsrc%2Fapp%2F(app)%2Factions.ts%22%2C%5B%22signOutAction%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/(app)/teams/new/page": "rsc"
+      }
     }
   },
   "edge": {},
-  "encryptionKey": "DXmInWrAmh/pSyxD3hr0Sv2v4WOTOjCf58sAa/J88xs="
+  "encryptionKey": "lQHUKL35SeHnbMVG2g+Xd4zMGsOYqGrW+Hj+JEaxwzk="
 }
