@@ -12,6 +12,57 @@ export interface Profile {
   createdAt: string;
 }
 
+export type TeamRole = "owner" | "member";
+
+export interface Team {
+  id: string;
+  name: string;
+  joinCode: string;
+  isPublic: boolean;
+  createdBy: string;
+  createdAt: string;
+}
+
+export interface Poll {
+  id: string;
+  teamId: string;
+  question: string;
+  createdBy: string;
+  createdAt: string;
+}
+
+export interface PollOptionResult {
+  optionId: string;
+  pollId: string;
+  label: string;
+  position: number;
+  voteCount: number;
+}
+
+export interface TeamMember {
+  teamId: string;
+  userId: string;
+  role: TeamRole;
+  joinedAt: string;
+  // Joined in from profiles for display — optional because not every
+  // query needs it.
+  displayName?: string | null;
+}
+
+export type PostKind = "text" | "image";
+
+export interface Post {
+  id: string;
+  teamId: string;
+  authorId: string;
+  parentPostId: string | null;
+  kind: PostKind;
+  title: string | null;
+  body: string | null;
+  mediaPath: string | null;
+  createdAt: string;
+}
+
 export interface ApiError {
   error: string;
   message: string;

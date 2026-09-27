@@ -1,7 +1,1 @@
-{
-  "/(app)/profile/page": "app/(app)/profile/page.js",
-  "/(app)/messages/page": "app/(app)/messages/page.js",
-  "/(app)/teams/new/page": "app/(app)/teams/new/page.js",
-  "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
-  "/(app)/search/page": "app/(app)/search/page.js"
-}
+{}
