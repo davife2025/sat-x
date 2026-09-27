@@ -1,7 +1,17 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./src/**/*.{ts,tsx}"],
+     content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    // Add the path to your monorepo's shared package source files:
+    "../../packages/shared/src/**/*.{js,ts,jsx,tsx,mdx}", 
+    "../../packages/shared/**/*.{js,ts,jsx,tsx,mdx}"
+  ],
+
+
   theme: {
     extend: {
       colors: {

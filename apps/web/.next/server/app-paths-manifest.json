@@ -1,7 +1,9 @@
 {
-  "/page": "app/page.js",
+  "/(app)/notifications/page": "app/(app)/notifications/page.js",
+  "/(app)/messages/page": "app/(app)/messages/page.js",
+  "/(app)/search/page": "app/(app)/search/page.js",
   "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
-  "/(app)/teams/join/page": "app/(app)/teams/join/page.js",
-  "/(auth)/sign-in/page": "app/(auth)/sign-in/page.js",
-  "/(auth)/sign-up/page": "app/(auth)/sign-up/page.js"
+  "/(app)/community/page": "app/(app)/community/page.js",
+  "/(app)/profile/page": "app/(app)/profile/page.js",
+  "/(app)/ai/page": "app/(app)/ai/page.js"
 }
