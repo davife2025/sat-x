@@ -46,6 +46,26 @@ on after.
   passwordless magic-link + Google OAuth replacing password auth; polls
   with voting, scoped to a team; a team can be flipped to publicly
   viewable (read-only, no account needed) by its owner.
+- **Session 3.5 — X-style visual design pass ✅ delivered:** replaced the
+  placeholder tokens with an X-inspired look (black/white/blue, pill
+  buttons, hairline feed rows) and added a sidebar app shell.
+- **Session 3.6 — Invite-gated sign-in, profile, fuller icon set ✅
+  delivered:** sat-x is invite-only now (any member can mint a one-use
+  invite code); added a profile page (display name); dropped Google
+  OAuth (it can't respect the invite gate without a Supabase Auth Hook —
+  noted as a follow-up, not silently shipped half-working).
+- **Session 3.7 — Full nav shell + real posting ✅ delivered:**
+  collapsible sidebar (Profile/History/Community/Lists/Space/Settings/
+  Security), bottom nav (Home/Search/AI/Notifications/Messages), For
+  You/Groups top tabs on Home, real posts (text/title/image, with
+  reply-threading support in the schema) with a working feed. Search,
+  AI, Notifications, Messages, History, Community, Lists, Spaces,
+  Settings, and Security are honest placeholders, not real features —
+  each is its own future session.
+- **Session 3.8 — Nav polish ✅ delivered:** removed every non-provided
+  icon (lucide-react dropped entirely — text-only where there's no
+  matching icon from you), sidebar starts closed so Home shows the feed
+  first, sticky For You/Groups tabs, floating compose button on Home.
 - **Session 4 — Live team map:** opt-in real-time GPS sharing among a
   team's members via Supabase Realtime, with an explicit on/off toggle
   and team-only visibility.
