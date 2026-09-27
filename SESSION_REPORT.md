@@ -1,65 +1,98 @@
-# Session 1 Report — Core Infrastructure
+# Session 3 Report — Sign-in simplification, polls, public browsing
+
+Delivered as one session since all three were requested together;
+reorders ahead of the live-map session per your steer.
 
 ## What this session covers
 
-Theme-agnostic foundation only, per `BUILD_ROADMAP.md`: monorepo scaffold,
-Supabase-backed auth, base layout, deploy-ready skeleton for both apps.
-No team/GPS/feed features — those are Sessions 2+.
+1. Replaced password auth with passwordless magic-link + Google OAuth.
+2. Polls scoped to a team, with voting.
+3. A team's owner can flip it to publicly viewable — real teams,
+   read-only, no account needed, so a prospective user can see the app
+   working before signing in.
 
 ## Built
 
-- `apps/web` — Next.js 14 (App Router), TypeScript, Tailwind. Routes:
-  `/` (landing), `/sign-in`, `/sign-up`, `/dashboard` (protected).
-- `apps/api` — Fastify, TypeScript. Routes: `GET /health`,
-  `GET /me` (protected — verifies a Supabase JWT, returns the caller's
-  profile).
-- `packages/shared` — `Profile`, `ApiResult`/`ApiError` types,
-  `requireEnv` helper. Deliberately minimal — no team/location types yet.
-- `supabase/migrations/0001_init_profiles.sql` — `profiles` table, RLS
-  (readable by any authenticated user, writable only by its owner), and
-  an `on_auth_user_created` trigger that creates the profile row
-  automatically on sign-up.
-- Root: `package.json` (pnpm workspaces), `turbo.json`, `.gitignore`,
-  `.env.example`, `README.md`.
+- `supabase/migrations/0003_polls_and_public_teams.sql` —
+  - `teams.is_public` column + an owner-only update policy.
+  - Additive `to anon, authenticated` SELECT policies on `teams` and
+    `team_members` for `is_public = true` rows (additive, not a
+    replacement — private teams are unaffected; Postgres ORs permissive
+    policies together).
+  - `polls`, `poll_options`, `poll_votes` tables, each with a
+    members-only read policy AND an anon-inclusive public-team read
+    policy.
+  - `create_poll`/`cast_vote` RPCs (`security definer`, same atomic
+    pattern as `create_team`/`join_team`). No insert policies exist on
+    any of the three tables — writes only happen through these RPCs.
+    Anonymous voting is blocked implicitly: `auth.uid()` is null for an
+    anon caller, so the membership check inside both RPCs always fails
+    — no separate "block anonymous writes" logic was needed.
+  - `poll_option_results` view (`security_invoker`) — vote counts per
+    option, automatically scoped by the same RLS as the base tables.
+- `apps/web/src/app/auth/callback/route.ts` — exchanges the PKCE code
+  from a magic-link click or Google redirect for a session.
+- `apps/web/src/app/(auth)/sign-in/page.tsx` — rewritten: one email
+  field, "send magic link" (creates the account if new) + a "Continue
+  with Google" button. No password field anywhere anymore.
+- `apps/web/src/app/(auth)/sign-up/page.tsx` — now just redirects to
+  `/sign-in` (kept so old links don't 404).
+- `apps/web/src/app/demo/page.tsx` — lists public teams; works with no
+  session at all.
+- `apps/web/src/app/teams/[id]/page.tsx` — no longer hard-redirects
+  signed-out visitors. Logic now: query the team (RLS decides
+  visibility) → if found, show it (with a "you're viewing read-only"
+  banner if you're not a member); if not found AND signed out, prompt
+  sign-in (ambiguous — could be private or just needs auth); if not
+  found AND signed in, 404 (same "don't leak existence" reasoning as
+  Session 2). Owners get a visibility-toggle button.
+- `apps/web/src/app/teams/[id]/actions.ts` — `setTeamVisibilityAction`,
+  RLS-enforced owner-only.
+- `apps/web/src/app/teams/[id]/polls/` — `actions.ts` (create/vote),
+  `page.tsx` (list — read-only bars for anonymous/non-member viewers,
+  clickable vote buttons for members), `new/page.tsx` +
+  `new/poll-form.tsx` (server wrapper + client component split, to
+  avoid relying on React's `use()` hook — not stably available in the
+  React 18.3 this app pins, whereas `await`-ing the already-resolved
+  params object in a Server Component is fine either way).
+- `packages/shared/src/types.ts` — `Team.isPublic`, `Poll`,
+  `PollOptionResult`.
+- Landing page: one "Get started" button (→ `/sign-in`) plus "See it
+  without an account" (→ `/demo`).
 
-## Verified this session (milestone checks)
+## Verified this session
 
-- `pnpm install` — clean, 175 packages, no peer-dep errors.
-- `pnpm --filter @sat-x/shared typecheck` — clean.
-- `pnpm --filter api typecheck` — clean.
-- `pnpm --filter web typecheck` — clean (one real bug caught and fixed:
-  `apps/web/src/lib/supabase/server.ts` had implicit-`any` params on the
-  cookie-sync callback — now explicitly typed with `CookieOptions`).
-- `pnpm --filter web build` — succeeds, generates all 4 routes. (One
-  config bug caught and fixed: `postcss.config.js` was written as an ESM
-  `export default`, but `apps/web`'s `package.json` has no
-  `"type": "module"`, so Next's webpack loader expects CommonJS — changed
-  to `module.exports`.)
-- `pnpm --filter api build` — succeeds (`tsc` emits to `dist/`).
-- Booted the built API (`node dist/index.js`) with dummy Supabase env
-  vars and confirmed `GET /health` responds `{"ok":true,...}` — the
-  server actually runs, not just compiles.
-- **Not yet run:** a live sign-up → dashboard walkthrough against a real
-  Supabase project (needs your actual project URL/keys — see
-  "Before this is really done" below). The auth code path is written and
-  typechecks, but hasn't hit a real database yet.
+- `pnpm install`, typecheck (all 3 packages) — clean, first pass.
+- `pnpm --filter web build` — clean, first pass. All 12 routes present,
+  including `/demo`, `/auth/callback`, `/teams/[id]/polls`,
+  `/teams/[id]/polls/new`.
+- Confirmed by reasoning through it (couldn't test live): an anonymous
+  vote attempt fails at the RPC's own membership check before it could
+  ever write a row, since `auth.uid()` is null with no session — this
+  isn't a separate anon-blocking rule, it falls out of the existing
+  `create_team`/`join_team`-style RPC pattern for free.
+- **Not yet run:** a live walkthrough (magic link email actually
+  arriving, Google OAuth round-trip, flipping a team public and viewing
+  it from an incognito window). Needs your real Supabase project, and
+  for Google specifically, OAuth credentials you create in Google Cloud
+  Console and paste into Supabase's Auth → Providers settings.
 
 ## Known stubs / deliberately deferred
 
-- No `teams`, `team_members`, or location tables — Session 2/3.
-- No GPS/geolocation code at all yet.
-- UI is placeholder tokens (`globals.css`), not a real brand pass —
-  intentional per "infra before theme."
-- Supabase Realtime is not yet enabled/used (needed for Session 3's live
-  map).
-- No CI, no deploy config beyond the two `.env.example` files — this
-  runs locally only for now.
+- No rate-limiting on magic-link requests (Supabase has built-in
+  per-email cooldowns by default, but worth checking before relying on
+  it at scale).
+- No UI to see who's on a public team's polls has-voted vs hasn't,
+  beyond the aggregate bars.
+- Still no location/GPS — that's next (Session 4).
 
 ## Before this is really "done"
 
-1. Create a Supabase project, run the migration, fill in `.env` from
-   `.env.example`.
-2. `pnpm install && pnpm dev`, then actually create an account through
-   the UI and confirm you land on `/dashboard` with your profile —
-   this is the one thing I couldn't verify without your real Supabase
-   credentials.
+- Run `0003_polls_and_public_teams.sql` after `0001`/`0002` on the same
+  project.
+- In Supabase's dashboard: Auth → Providers → enable Google, using
+  credentials from a Google Cloud Console OAuth app (redirect URI:
+  `https://<your-supabase-project>.supabase.co/auth/v1/callback`).
+- Sign in once, start a team, click "Make publicly viewable," then open
+  `/demo` in an incognito window to confirm the read-only path actually
+  works end to end.

@@ -36,18 +36,23 @@ on after.
 
 ## Sessions
 
-- **Session 1 — Core infrastructure** (this delivery): monorepo scaffold,
+- **Session 1 — Core infrastructure ✅ delivered:** monorepo scaffold,
   Supabase-backed auth (sign up/in/out), base profile, deploy-ready
   skeleton for both apps. No product features yet.
-- **Session 2 — Teams:** create/join a team, member list, roles
-  (owner/member), team profile page.
-- **Session 3 — Live team map:** opt-in real-time GPS sharing among a
+- **Session 2 — Teams ✅ delivered:** create/join a team, member list,
+  roles (owner/member), team profile page.
+- **Session 3 — Sign-in simplification, polls, and public browsing ✅
+  delivered** (reordered ahead of the live map at your request):
+  passwordless magic-link + Google OAuth replacing password auth; polls
+  with voting, scoped to a team; a team can be flipped to publicly
+  viewable (read-only, no account needed) by its owner.
+- **Session 4 — Live team map:** opt-in real-time GPS sharing among a
   team's members via Supabase Realtime, with an explicit on/off toggle
   and team-only visibility.
-- **Session 4 — Feed v1:** posts scoped to a team, chronological first,
+- **Session 5 — Feed v1:** posts scoped to a team, chronological first,
   ranking algorithm (inspired by X's architecture) layered in once
   there's real engagement data to rank against.
-- **Session 5 — Interactions:** replies, reactions, notifications.
+- **Session 6 — Interactions:** replies, reactions, notifications.
 - **Session N — Polish & launch prep:** onboarding flow, empty states,
   deploy hardening.
 
