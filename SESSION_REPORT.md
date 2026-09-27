@@ -1,66 +1,43 @@
-# Session 3.5 Report — X-style visual design pass
+# Session 3.9 Report — Profile photo upload, "your posts", AI icon
 
-The placeholder tokens from Session 1 get replaced now, per your ask for
-the real UI to look like X's.
+## Built
 
-## What changed
-
-- `apps/web/src/app/globals.css` — X's actual palette approximated: pure
-  black "Lights out" dark mode / white light mode, X blue (`hsl(203 89%
-  53%)`) as the accent, hairline borders (`.x-row`) for feed-style lists
-  instead of boxed cards.
-- `tailwind.config.ts` — dropped the old `--radius` token mapping (it was
-  shared between buttons and cards, which don't want the same radius in
-  X's actual design — buttons are full pills, cards are rounded-2xl, not
-  the same value).
-- `components/ui/button.tsx` — `rounded-full`, bold weight — X's
-  signature button shape.
-- `components/ui/card.tsx`, `input.tsx` — rounded-2xl / taller fields,
-  X's actual field proportions.
-- **New: a real app shell** (`(app)/layout.tsx`) — left sidebar on
-  desktop (wordmark, Home, New team, account/sign-out), condensed top
-  bar on mobile. This is genuinely new structure, not just a restyle —
-  moved `dashboard/`, `teams/`, and `demo/` into an `(app)` route group
-  so they share it (route groups don't change the URL, so `/dashboard`
-  etc. are unaffected).
-  - Deliberately NOT gated on being signed in — it renders a "Sign in"
-    button instead of the account menu when there's no session, so the
-    public-team browsing from last session still works unchanged.
-- `dashboard`, `teams/[id]`, `teams/[id]/polls`, `demo` pages — restyled
-  their lists from boxed cards to hairline rows (X's actual timeline
-  look).
-- Added `lucide-react` for the sidebar icons — generic line icons, not
-  X's own (trademarked) icon set or bird logo.
+- `supabase/migrations/0006_avatars.sql` — `avatars` storage bucket
+  (public-read), with insert/update policies scoped to
+  `{user_id}/...` paths — tighter than `post-media`'s bucket-wide
+  policy, since this prevents one account from overwriting another's
+  avatar file even though both buckets are public-read.
+- `profile/profile-form.tsx` (new, client) — same upload pattern as
+  compose (upload to Storage from the browser, then submit the
+  resulting public URL through the server action), plus an instant
+  local preview via `URL.createObjectURL` before the upload finishes.
+  Falls back to your provided profile-silhouette icon when there's no
+  avatar yet, rather than a blank space.
+- `profile/actions.ts` — `updateProfileAction` now also accepts and
+  saves `avatar_url`.
+- `profile/page.tsx` — rebuilt to also list the signed-in user's own
+  posts (query by `author_id`, not `team_id` — this is the one query
+  in the app so far that's genuinely about "your stuff" rather than
+  "your team's stuff").
+- `bottom-nav.tsx` — `sat-x AI`'s icon is now your satellite icon
+  (previously text-only, since none of your nine matched it — you
+  asked for it reused here rather than left blank).
 
 ## Verified this session
 
-- `pnpm install` (new dep), typecheck, `pnpm --filter web build` — all
-  clean, first pass. All 11 routes still resolve at their original URLs
-  after the route-group restructure.
-- Also refreshed the standalone mock preview (same one from Session 1)
-  to match — same palette/shell, still just static mock data, not part
-  of the real app.
+- Typecheck, `pnpm --filter web build` — clean, first pass. `/profile`
+  now carries real client JS (1.68 kB) for the upload flow; every other
+  route unaffected.
 
-## Known stubs / deliberately deferred
+## Known limitations
 
-- No dark/light toggle UI yet — currently follows the OS/browser's
-  `prefers-color-scheme` only.
-- Sidebar nav is intentionally minimal (Home, New team) — no global
-  teams list or search yet, since those features don't exist.
-- Still using system fonts, not a custom typeface — X's actual "Chirp"
-  font is proprietary, not something to reproduce.
-
-## Applying this diff
-
-Because `dashboard/`, `teams/`, and `demo/` moved into an `(app)/` route
-group, a flat diff can't express "delete the old path" — so **delete
-`apps/web/src/app/dashboard/`, `apps/web/src/app/teams/`, and
-`apps/web/src/app/demo/` first**, then unzip this on top. Everything
-under `apps/web/src/app/(app)/` in this zip is the new location for
-those same pages, plus the new `layout.tsx`/`actions.ts` shell files.
+- No image resizing/cropping on upload — whatever file size the person
+  picks is what gets stored and displayed.
+- Avatars aren't shown anywhere else yet (the feed and team member list
+  still show display name only, no photo) — straightforward to add
+  once you want it, didn't fold it in silently since it wasn't asked
+  for this round.
 
 ## Before this is really "done"
 
-Nothing new needed beyond what earlier sessions already required (a
-real Supabase project) — this session was code + styling only, no
-schema changes.
+Run `0006_avatars.sql` after `0001`-`0005` on the same project.

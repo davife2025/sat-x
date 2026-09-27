@@ -2,6 +2,6 @@
   "/page": "app/page.js",
   "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
   "/(app)/teams/join/page": "app/(app)/teams/join/page.js",
-  "/(auth)/sign-up/page": "app/(auth)/sign-up/page.js",
-  "/(auth)/sign-in/page": "app/(auth)/sign-in/page.js"
+  "/(auth)/sign-in/page": "app/(auth)/sign-in/page.js",
+  "/(auth)/sign-up/page": "app/(auth)/sign-up/page.js"
 }

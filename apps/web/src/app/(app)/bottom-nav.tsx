@@ -7,7 +7,7 @@ import { NavIcon } from "@/components/nav-icon";
 const ITEMS = [
   { href: "/dashboard", label: "Home", icon: <NavIcon src="/icons/home.png" alt="Home" /> },
   { href: "/search", label: "Search", icon: <NavIcon src="/icons/search.png" alt="Search" /> },
-  { href: "/ai", label: "sat-x AI", icon: null },
+  { href: "/ai", label: "sat-x AI", icon: <NavIcon src="/icons/space.png" alt="sat-x AI" /> },
   { href: "/notifications", label: "Notifications", icon: <NavIcon src="/icons/notifications.png" alt="Notifications" /> },
   { href: "/messages", label: "Messages", icon: <NavIcon src="/icons/messages.png" alt="Messages" /> },
 ];

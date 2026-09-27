@@ -1,9 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { updateProfileAction } from "./actions";
+import { ProfileForm } from "./profile-form";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -14,9 +11,15 @@ export default async function ProfilePage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("display_name, created_at")
+    .select("display_name, avatar_url")
     .eq("id", user.id)
     .single();
+
+  const { data: myPosts } = await supabase
+    .from("posts")
+    .select("id, team_id, title, body, media_path, created_at")
+    .eq("author_id", user.id)
+    .order("created_at", { ascending: false });
 
   return (
     <main className="mx-auto max-w-xl">
@@ -24,18 +27,33 @@ export default async function ProfilePage() {
         <h1 className="text-xl font-black">Profile</h1>
         <p className="mt-1 text-sm text-muted-foreground">{user.email}</p>
       </div>
-      <form action={updateProfileAction} className="flex flex-col gap-4 px-4 py-4">
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="display_name">Display name</Label>
-          <Input
-            id="display_name"
-            name="display_name"
-            defaultValue={profile?.display_name ?? ""}
-            placeholder="What teammates see"
-          />
-        </div>
-        <Button type="submit" className="self-start">Save</Button>
-      </form>
+
+      <ProfileForm
+        userId={user.id}
+        displayName={profile?.display_name ?? ""}
+        avatarUrl={profile?.avatar_url ?? null}
+      />
+
+      <div className="x-row px-4 py-3">
+        <h2 className="text-sm font-bold text-muted-foreground">Your posts</h2>
+      </div>
+      {myPosts && myPosts.length > 0 ? (
+        myPosts.map((p) => (
+          <div key={p.id} className="x-row px-4 py-4">
+            {p.title && <p className="font-bold">{p.title}</p>}
+            {p.body && <p className="mt-1 whitespace-pre-wrap text-sm">{p.body}</p>}
+            {p.media_path && (
+              <img
+                src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/post-media/${p.media_path}`}
+                alt=""
+                className="mt-2 max-h-96 w-full rounded-xl object-cover"
+              />
+            )}
+          </div>
+        ))
+      ) : (
+        <p className="px-4 py-4 text-sm text-muted-foreground">You haven't posted yet.</p>
+      )}
     </main>
   );
 }
