@@ -66,3 +66,14 @@ body {
 .x-row {
   border-bottom: 1px solid hsl(var(--border));
 }
+
+/* Same dark-mode invert as .nav-icon, without forcing a size — for
+   black-on-transparent icons used as placeholders (e.g. no avatar yet). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .icon-invert {
+    filter: invert(1);
+  }
+}
+:root[data-theme="dark"] .icon-invert {
+  filter: invert(1);
+}

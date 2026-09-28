@@ -1,15 +1,21 @@
 import "dotenv/config";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import rateLimit from "@fastify/rate-limit";
 import { healthRoutes } from "./routes/health.js";
 import { meRoutes } from "./routes/me.js";
 import { inviteRoutes } from "./routes/invites.js";
 
-const app = Fastify({ logger: true });
+// trustProxy so rate limiting sees each visitor's real IP behind Render's
+// proxy, rather than treating everyone as one client.
+const app = Fastify({ logger: true, trustProxy: true });
 
 await app.register(cors, {
   origin: process.env.WEB_ORIGIN ?? "http://localhost:3000",
 });
+
+// global: false — only routes that opt in via config.rateLimit are limited.
+await app.register(rateLimit, { global: false });
 
 await app.register(healthRoutes);
 await app.register(meRoutes);

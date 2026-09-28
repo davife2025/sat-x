@@ -71,6 +71,13 @@ on after.
   can't overwrite someone else's photo), your own posts listed on your
   profile, sat-x AI's bottom-nav icon is now the satellite icon instead
   of text.
+- **Session 3.10 — Admin-controlled access ✅ delivered:** only admins
+  create groups and mint invite codes; sign-in is email + (invite code
+  or password) — the code becomes the initial password, changeable in
+  Security; people without a code can request one (admins approve from
+  an in-app Admin page); avatar is the menu toggle, and clicking outside
+  the menu closes it. Also fixed two security holes from earlier
+  migrations (see SESSION_REPORT.md).
 - **Session 4 — Live team map:** opt-in real-time GPS sharing among a
   team's members via Supabase Realtime, with an explicit on/off toggle
   and team-only visibility.

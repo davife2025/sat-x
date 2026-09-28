@@ -17,7 +17,10 @@ export async function createTeamAction(formData: FormData) {
   });
 
   if (error || !data) {
-    redirect("/teams/new?error=" + encodeURIComponent(error?.message ?? "Could not create the team."));
+    const message = error?.message === "admin_only"
+      ? "Only admins can create a group right now."
+      : error?.message ?? "Could not create the team.";
+    redirect("/teams/new?error=" + encodeURIComponent(message));
   }
   redirect(`/teams/${data.id}`);
 }

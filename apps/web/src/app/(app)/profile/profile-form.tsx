@@ -50,7 +50,7 @@ export function ProfileForm({
         <img
           src={preview ?? "/icons/profile.png"}
           alt=""
-          className="h-16 w-16 rounded-full border border-border object-cover"
+          className={`h-16 w-16 rounded-full border border-border object-cover ${preview ? "" : "icon-invert p-3"}`}
         />
         <label className="text-sm font-bold text-primary underline cursor-pointer">
           Change photo

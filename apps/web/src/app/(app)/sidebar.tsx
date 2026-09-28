@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { NavIcon } from "@/components/nav-icon";
 import { Button } from "@/components/ui/button";
@@ -21,23 +21,69 @@ const ITEMS = [
 export function Sidebar({
   isSignedIn,
   email,
+  avatarUrl,
+  isAdmin,
   onSignOut,
 }: {
   isSignedIn: boolean;
   email?: string;
+  avatarUrl?: string | null;
+  isAdmin?: boolean;
   onSignOut: () => void;
 }) {
+  // Admins get one extra text-only item (no icon among the nine fits).
+  const items = isAdmin ? [...ITEMS, { href: "/admin", label: "Admin", icon: null }] : ITEMS;
+
   // Starts closed — Home should show the feed first, not the menu.
   const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Click anywhere outside the toggle button or the open panel closes it.
+  // mousedown (not click) so the same click that opens the menu can't
+  // also be seen as an "outside" click and immediately close it again —
+  // by the time this listener is attached (after the open-triggering
+  // click has already fully completed), that risk is already gone.
+  useEffect(() => {
+    if (!open) return;
+    function handlePointerDown(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, [open]);
 
   return (
-    <>
+    <div ref={containerRef}>
+      {/* Toggle is the user's own avatar, not a hamburger icon — tap it
+          to open/close, same as tapping your own profile picture in X's
+          mobile app. */}
       <button
         aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((v) => !v)}
-        className="fixed left-3 top-3 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-lg"
+        className="fixed left-3 top-3 z-20 flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-border bg-background"
       >
-        {open ? "✕" : "☰"}
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt=""
+            width={40}
+            height={40}
+            style={{ width: 40, height: 40, objectFit: "cover" }}
+          />
+        ) : (
+          // The placeholder silhouette is black-on-transparent, so it
+          // needs the dark-mode invert or it vanishes on a black button.
+          <img
+            src="/icons/profile.png"
+            alt=""
+            width={24}
+            height={24}
+            className="icon-invert"
+            style={{ width: 24, height: 24 }}
+          />
+        )}
       </button>
 
       {open && (
@@ -46,7 +92,7 @@ export function Sidebar({
             <Link href="/" className="mb-6 block text-2xl font-black">sat-x</Link>
             <nav className="flex flex-col gap-1">
               {isSignedIn &&
-                ITEMS.map((item) => (
+                items.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -81,7 +127,7 @@ export function Sidebar({
           <div>
             <nav className="flex flex-col gap-1">
               {isSignedIn &&
-                ITEMS.map((item) => (
+                items.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -109,6 +155,6 @@ export function Sidebar({
           )}
         </aside>
       )}
-    </>
+    </div>
   );
 }

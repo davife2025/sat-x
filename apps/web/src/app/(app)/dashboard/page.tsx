@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
-import { InviteButton } from "./invite-button";
 
 export default async function DashboardPage({
   searchParams,
@@ -20,6 +19,14 @@ export default async function DashboardPage({
   if (!user) {
     redirect("/sign-in");
   }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("is_admin, password_changed")
+    .eq("id", user.id)
+    .single();
+  const isAdmin = !!profile?.is_admin;
+  const passwordChanged = !!profile?.password_changed;
 
   const { data: memberships } = await supabase
     .from("team_members")
@@ -73,6 +80,12 @@ export default async function DashboardPage({
 
   return (
     <main className="mx-auto max-w-xl">
+      {!passwordChanged && (
+        <a href="/security" className="x-row block bg-muted px-4 py-3 text-sm">
+          Your invite code is still your password.{" "}
+          <span className="font-bold text-primary">Change it →</span>
+        </a>
+      )}
       <div className="sticky top-0 z-10 flex border-b border-border bg-background text-sm font-bold">
         <a
           href="/dashboard?tab=for-you"
@@ -98,14 +111,11 @@ export default async function DashboardPage({
 
       {activeTab === "groups" ? (
         <>
-          <div className="x-row px-4 py-3">
-            <InviteButton />
-          </div>
           <div className="flex items-center justify-between px-4 py-3">
-            <h2 className="text-sm font-bold text-muted-foreground">Your teams</h2>
+            <h2 className="text-sm font-bold text-muted-foreground">Your groups</h2>
             <div className="flex gap-2">
               <a href="/teams/join"><Button variant="outline">Join with code</Button></a>
-              <a href="/teams/new"><Button>Start a team</Button></a>
+              {isAdmin && <a href="/teams/new"><Button>Start a group</Button></a>}
             </div>
           </div>
           {memberships && memberships.length > 0 ? (
